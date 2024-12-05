@@ -5,15 +5,22 @@ use CGI qw(:standard);
 
 print header, start_html("Nueva Página");
 
-print start_form(-method => 'POST', -action => 'save.pl'),
-      p("Nombre de la nueva página:"),
-      textfield(-name => 'name'),
-      p("Contenido:"),
-      textarea(-name => 'content', -rows => 10, -cols => 50),
-      br,
-      submit(-value => 'Guardar'),
-      end_form;
+# Obtener datos del formulario
+my $title = param('title') || die "Falta el título";
+my $text = param('text') || die "Falta el texto";
 
-print "<br>", a({ href => "list.pl" }, "Volver al Listado");
+# Sanitizar el nombre del archivo
+$title =~ s/[^\w-]//g;
+my $file_path = "../pages/$title.md";
+
+# Guardar el archivo
+open my $fh, '>', $file_path or die "No se pudo crear el archivo: $!";
+print $fh $text;
+close $fh;
+
+# Confirmar y mostrar enlace al listado
+print h1($title);
+print pre($text);
+print p("Página grabada ", a({ href => "list.pl" }, "Listado de Páginas"));
 
 print end_html;
