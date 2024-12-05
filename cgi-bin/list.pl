@@ -2,7 +2,6 @@
 use strict;
 use warnings;
 use CGI qw(:standard);
-use File::Glob ':glob';
 
 print header, start_html("Listado de Páginas Wiki");
 
@@ -22,16 +21,16 @@ while (my $file = readdir($dh)) {
     $name =~ s/\.md$//;
 
     print li(
-        a({ href => "view.pl?file=$name" }, $name),
+        a({ href => "view.pl?fn=$name" }, $name),
         " ",
-        a({ href => "edit.pl?file=$name" }, "[E]"),
+        a({ href => "edit.pl?fn=$name" }, "[E]"),
         " ",
-        a({ href => "delete.pl?file=$name" }, "[X]")
+        a({ href => "delete.pl?fn=$name" }, "[X]")
     );
 }
 closedir($dh);
 
-print a({ href => "new.pl" }, "Nueva Página");
+print a({ href => "new.html" }, "Nueva Página");
 print "<br>", a({ href => "index.html" }, "Volver al Inicio");
 
 print end_html;
