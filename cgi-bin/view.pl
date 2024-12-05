@@ -4,17 +4,27 @@ use warnings;
 use CGI qw(:standard);
 use Text::Markdown 'markdown';
 
-print header, start_html("Ver Página");
+# Cabeceras
+print header, start_html("Visualizar");
 
-my $file = param('file') || die "Archivo no especificado";
-my $file_path = "../pages/$file.md";
+# Obtener el nombre del archivo desde el parámetro
+my $filename = param('fn') || die "Nombre del archivo no especificado";
 
-open my $fh, '<', $file_path or die "No se puede abrir el archivo: $!";
-my $content = do { local $/; <$fh> };
+# Ruta del archivo Markdown
+my $file_path = "../pages/$filename.md";
+
+# Leer el contenido del archivo
+open my $fh, '<:utf8', $file_path or die "No se pudo abrir el archivo $file_path: $!";
+my $markdown_content = do { local $/; <$fh> };
 close $fh;
 
-print h1($file);
-print div({ style => "border: 1px solid #ccc; padding: 10px;" }, markdown($content));
-print "<br>", a({ href => "list.pl" }, "Volver al Listado");
+# Convertir Markdown a HTML
+my $html_content = markdown($markdown_content);
+
+# Mostrar el contenido convertido
+print h1("Visualizar"),
+      a({ href => "list.pl" }, "Retroceder"),
+      hr,
+      $html_content;
 
 print end_html;
