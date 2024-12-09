@@ -1,36 +1,25 @@
 #!/usr/bin/perl
-use strict;
 use warnings;
-use CGI qw(:standard);
+use DBI;
 
-print header, start_html("Listado de Páginas Wiki");
+print "Content-type: text/html\n\n";
 
-print h1("Nuestras páginas de wiki");
+# my $dsn = "DBI:mysql:wiki:localhost";
+# my $user = "root";
+# my $password = "";
+# my $dbh = DBI->connect($dsn, $user, $password) or die "No se pudo conectar a la base de datos";
 
-my $directory = "../pages"; # Directorio donde se almacenan las páginas
-mkdir $directory unless -d $directory;
+# my $sth = $dbh->prepare("SELECT id, titulo FROM paginas");
+# $sth->execute();
 
-# Listar archivos
-opendir(my $dh, $directory) or die "No se puede abrir el directorio: $!";
-while (my $file = readdir($dh)) {
-    next if $file =~ /^\./; # Ignorar archivos ocultos
-    next unless $file =~ /\.md$/; # Solo archivos Markdown
+print "<html><body><h1>Listado de Páginas</h1><ul>";
+# while (my @row = $sth->fetchrow_array) {
+#     my ($id, $titulo) = @row;
+#     print "<li><a href='/cgi-bin/view.pl?id=$id'>$titulo</a> ";
+#     print "<a href='/cgi-bin/edit.pl?id=$id'>[E]</a> ";
+#     print "<a href='/cgi-bin/delete.pl?id=$id'>[X]</a></li>";
+# }
+print "</ul><a href='../new.html'>Crear Nueva Página</a></body></html>";
 
-    my $file_path = "$directory/$file";
-    my $name = $file;
-    $name =~ s/\.md$//;
-
-    print li(
-        a({ href => "view.pl?fn=$name" }, $name),
-        " ",
-        a({ href => "edit.pl?fn=$name" }, "[E]"),
-        " ",
-        a({ href => "delete.pl?fn=$name" }, "[X]")
-    );
-}
-closedir($dh);
-
-print a({ href => "new.html" }, "Nueva Página");
-print "<br>", a({ href => "index.html" }, "Volver al Inicio");
-
-print end_html;
+$sth->finish();
+$dbh->disconnect();

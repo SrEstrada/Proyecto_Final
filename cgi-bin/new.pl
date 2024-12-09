@@ -1,26 +1,27 @@
 #!/usr/bin/perl
-use strict;
 use warnings;
-use CGI qw(:standard);
+use CGI;
 
-print header, start_html("Nueva Página");
+my $cgi = CGI->new;
+print $cgi->header();
 
-# Obtener datos del formulario
-my $title = param('title') || die "Falta el título";
-my $text = param('text') || die "Falta el texto";
+my $titulo = $cgi->param('titulo');
+my $contenido = $cgi->param('contenido');
 
-# Sanitizar el nombre del archivo
-$title =~ s/[^\w-]//g;
-my $file_path = "../pages/$title.md";
+if ($titulo && $contenido) {
+    # my $dsn = "DBI:mysql:wiki:localhost";
+    # my $user = "root";
+    # my $password = "";
+    # my $dbh = DBI->connect($dsn, $user, $password) or die "No se pudo conectar a la base de datos";
 
-# Guardar el archivo
-open my $fh, '>', $file_path or die "No se pudo crear el archivo: $!";
-print $fh $text;
-close $fh;
+    # my $sth = $dbh->prepare("INSERT INTO paginas (titulo, contenido) VALUES (?, ?)");
+    # $sth->execute($titulo, $contenido);
 
-# Confirmar y mostrar enlace al listado
-print h1($title);
-print pre($text);
-print p("Página grabada ", a({ href => "list.pl" }, "Listado de Páginas"));
+    print "<html><body><h1>¡Página creada con éxito!</h1>";
+    print "<a href='/cgi-bin/list.pl'>Ver listado</a></body></html>";
 
-print end_html;
+    # $sth->finish();
+    # $dbh->disconnect();
+} else {
+    print "<html><body><h1>Error: Faltan datos</h1></body></html>";
+}

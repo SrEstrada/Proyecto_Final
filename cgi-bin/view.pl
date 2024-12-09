@@ -1,30 +1,23 @@
 #!/usr/bin/perl
-use strict;
 use warnings;
-use CGI qw(:standard);
-use Text::Markdown 'markdown';
+use DBI;
 
-# Cabeceras
-print header, start_html("Visualizar");
+print "Content-type: text/html\n\n";
 
-# Obtener el nombre del archivo desde el parámetro
-my $filename = param('fn') || die "Nombre del archivo no especificado";
+my $id = $ENV{'QUERY_STRING'} =~ /id=(\d+)/ ? $1 : 0;
 
-# Ruta del archivo Markdown
-my $file_path = "../pages/$filename.md";
+my $dsn = "DBI:mysql:wiki:localhost";
+my $user = "root";
+my $password = "";
+my $dbh = DBI->connect($dsn, $user, $password) or die "No se pudo conectar a la base de datos";
 
-# Leer el contenido del archivo
-open my $fh, '<:utf8', $file_path or die "No se pudo abrir el archivo $file_path: $!";
-my $markdown_content = do { local $/; <$fh> };
-close $fh;
+my $sth = $dbh->prepare("SELECT titulo, contenido FROM paginas WHERE id = ?");
+$sth->execute($id);
+my ($titulo, $contenido) = $sth->fetchrow_array;
 
-# Convertir Markdown a HTML
-my $html_content = markdown($markdown_content);
+print "<html><body><h1>$titulo</h1>";
+print "<div>" . `echo '$contenido' | markdown` . "</div>";
+print "<a href='/cgi-bin/list.pl'>Volver</a></body></html>";
 
-# Mostrar el contenido convertido
-print h1("Visualizar"),
-      a({ href => "list.pl" }, "Retroceder"),
-      hr,
-      $html_content;
-
-print end_html;
+$sth->finish();
+$dbh->disconnect();
