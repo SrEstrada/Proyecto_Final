@@ -1,6 +1,6 @@
-#TRABAJO FINAL MARKDOWN WIKIPEDIA
+# TRABAJO FINAL MARKDOWN WIKIPEDIA
 
-##Integrantes:
+## Integrantes:
 ```
 Camani Chambi, Ronald Rodrigo
 Estrada Arce, Sergio Emilio
