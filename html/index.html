@@ -1,23 +1,33 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
+    <title>Inicio - Wiki</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1>Wikipedia Personal</h1>
-    <p>Nombre: Tu Nombre Completo</p>
-    <p>Curso: Nombre del Curso</p>
-    <p>Grupo: Grupo Asignado</p>
-    <p>Descripción: Esta es una implementación simple de un sistema tipo Wikipedia con soporte para Markdown.</p>
-    <nav>
-        <ul>
-            <li><a href="../cgi-bin/list.pl">Listado de Páginas</a></li>
-            <li><a href="/new.html">Crear Nueva Página</a></li>
-        </ul>
-    </nav>
+    <header>
+        <h1>Bienvenido a la Wiki</h1>
+    </header>
+    
+    <main>
+        <section id="descripcion">
+            <h2>En este proyecto lo que se busca crear es un página parecida a la ya conocida Wikipedia</h2>
+            <p>Esta aplicación permite crear, visualizar, editar y eliminar contenido en formato Markdown, transformándolo en HTML para su visualización.</p>
+            <p>Desarrollado por:<br> <strong>Sergio Emilio Estrada Arce <br> Ronald Rodrigo Camani Chambi <br> Laura lucia vilca Huarca </strong></p>
+            <p>Curso: <strong>Programación Web 1 - Laboratorio</strong> | Grupo: <strong>A</strong></p>
+        </section>
+        <nav id="enlaces-principales">
+            <h2>Acceso Rápido</h2>
+            <ul>
+                <li><a href="../cgi-bin/list.pl">Ver Listado de Páginas</a></li>
+                <li><a href="/new.html">Crear Nueva Página</a></li>
+            </ul>
+        </nav>
+    </main>
+    <footer>
+        <p>&copy; 2024 Proyecto Wiki. Todos los derechos reservados.</p>
+    </footer>
 </body>
 </html>
