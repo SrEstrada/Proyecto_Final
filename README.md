@@ -1,6 +1,8 @@
-TRABAJO FINAL MARKDOWN WIKIPEDIA
+#TRABAJO FINAL MARKDOWN WIKIPEDIA
 
-Integrantes:
-    Camani Chambi, Ronald Rodrigo
-    Estrada Arce, Sergio Emilio
-    Vilca Huarca, Laura Lucia
+##Integrantes:
+```
+Camani Chambi, Ronald Rodrigo
+Estrada Arce, Sergio Emilio
+Vilca Huarca, Laura Lucia
+```
